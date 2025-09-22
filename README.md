@@ -99,8 +99,11 @@ python scripts/fs_demo.py
 python scripts/graspnet_rs_demo.py
 ```
 
-<video src="./assets/graspnet_rs_demo-2025-09-22_09.42.15.mp4" controls="controls" width="600" />
-
+<p align="left">
+  <a href="">
+    <img src="./assets/graspnet_rs_demo.gif" alt="Demo" width="100%">
+  </a>
+</p>
 
 ### RealSense + FoundationStereo (stereo depth estimation, press <space> to refresh, `q` to quit)
 
@@ -108,7 +111,12 @@ python scripts/graspnet_rs_demo.py
 python scripts/fs_rs_demo.py
 ```
 
-<video src="./assets/fs_rs_demo-2025-09-22_09.49.08.mp4" controls="controls" width="600" />
+<p align="left">
+  <a href="">
+    <img src="./assets/fs_rs_demo.gif" alt="Demo" width="100%">
+  </a>
+</p>
+
 
 
 ### RealSense + FoundationStereo + GraspNet (6-DoF grasp prediction, press `q` to fetch next frame)
@@ -117,7 +125,11 @@ python scripts/fs_rs_demo.py
 python scripts/graspnet_fs_rs_demo.py
 ```
 
-<video src="./assets/graspnet_fs_rs_demo-2025-09-22_10.19.14.mp4" controls="controls" width="600" />
+<p align="left">
+  <a href="">
+    <img src="./assets/graspnet_fs_rs_demo.gif" alt="Demo" width="100%">
+  </a>
+</p>
 
 ### Franka + RealSense RGB-D + GraspNet (real-time grasping)
 
@@ -125,7 +137,12 @@ python scripts/graspnet_fs_rs_demo.py
 python scripts/franky_graspnet_rs_demo.py
 ```
 
-<video src="./assets/franky_graspnet_rs_demo-2025-09-22_10.27.00.mp4" controls="controls" width="600" />
+<p align="left">
+  <a href="">
+    <img src="./assets/franky_graspnet_rs_demo_4x.gif" alt="Demo" width="100%">
+  </a>
+</p>
+
 
 ### Franka + RealSense IR + FoundationStereo + GraspNet (real-time grasping)
 
@@ -133,7 +150,12 @@ python scripts/franky_graspnet_rs_demo.py
 python scripts/franky_graspnet_fs_demo.py
 ```
 
-<video src="./assets/franky_graspnet_fs_demo-2025-09-22_11.01.45.mp4" controls="controls" width="600" />
+<p align="left">
+  <a href="">
+    <img src="./assets/franky_graspnet_fs_demo_4x.gif" alt="Demo" width="100%">
+  </a>
+</p>
+
 
 ## Known [Issues](https://github.com/TimSchneider42/franky/issues/57)
 
