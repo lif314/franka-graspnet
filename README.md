@@ -57,8 +57,10 @@ pip install -r requirements_fs.txt
 ```
 
 ### Download checkpoints
+- [FoundationStereo](https://github.com/NVlabs/FoundationStereo?tab=readme-ov-file#model-weights) 
+- [GraspNet](https://github.com/graspnet/graspnet-baseline?tab=readme-ov-file#training-and-testing)
 
-Organize checkpoints as follows:
+Organize checkpoints as follows: 
 
 ```
 checkpoints/
