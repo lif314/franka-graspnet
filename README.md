@@ -78,6 +78,9 @@ checkpoints/
 
 ## Usage
 
+> **Note**: We adopt an **eye-in-hand** setup. You can modify the calibration parameters in [franka\_controller](./franka_graspnet/franka_controller.py) to adapt them to your own system.
+
+
 ### Test GraspNet
 
 ```bash
@@ -105,7 +108,7 @@ python scripts/graspnet_rs_demo.py
   </a>
 </p>
 
-### RealSense + FoundationStereo (stereo depth estimation, press <space> to refresh, `q` to quit)
+### RealSense + FoundationStereo (stereo depth estimation, press `space` to refresh, `q` to quit)
 
 ```bash
 python scripts/fs_rs_demo.py
