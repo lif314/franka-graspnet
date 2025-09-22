@@ -129,7 +129,7 @@ class GraspNetInfer:
         end_points['cloud_colors'] = color_sampled
         return end_points, cloud_o3d
 
-    def predict_grasps(self, end_points, cloud):
+    def predict_grasps(self, end_points, cloud, return_best=True):
         """
         预测抓取姿态
         
@@ -158,7 +158,7 @@ class GraspNetInfer:
         filtered_grasps = self._filter_by_vertical_angle(gg)
         
         # 5. 选择最佳抓取
-        best_grasp_group = self._select_best_grasp(filtered_grasps)
+        best_grasp_group = self._select_best_grasp(filtered_grasps, return_best)
         
         return best_grasp_group
     
@@ -200,7 +200,7 @@ class GraspNetInfer:
         
         return filtered
     
-    def _select_best_grasp(self, filtered_grasps):
+    def _select_best_grasp(self, filtered_grasps, return_best=True):
         """选择最佳抓取并返回GraspGroup"""
         # 按得分排序
         filtered_grasps.sort(key=lambda g: g.score, reverse=True)
@@ -208,16 +208,15 @@ class GraspNetInfer:
         # 取前k个抓取
         top_grasps = filtered_grasps[:min(len(filtered_grasps), self.top_k_grasps)]
         
-        # 选择得分最高的抓取
-        best_grasp = top_grasps[0]
-        
-        # 创建新的GraspGroup并添加最佳抓取
         result_gg = GraspGroup()
-        # for g in top_grasps:
-        #     result_gg.add(g)
-        result_gg.add(best_grasp)
-
-        return result_gg
+        if return_best:
+            best_grasp = top_grasps[0]
+            result_gg.add(best_grasp)
+            return result_gg
+        else:
+            for g in top_grasps:
+                result_gg.add(g)
+            return result_gg
     
     def update_parameters(self, **kwargs):
         """更新预测参数"""

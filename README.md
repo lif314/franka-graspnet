@@ -1,10 +1,152 @@
 # Franka 6-DoF Grasping with GraspNet
 
+This repository demonstrates **6-DoF grasping on the Franka FR3** using [GraspNet](https://github.com/graspnet/graspnet-baseline). It integrates modern PyTorch, stereo depth estimation, and lightweight robot control for reproducible and extensible research.
+
+## Key Features
+
+* **Easy to use**: Pure Python implementation, no ROS required. Robot control via [franky](https://github.com/TimSchneider42/franky).
+* **Modern PyTorch**: Upgraded to PyTorch 2.6.0 with CUDA 12.4.
+  * Includes a modified [knn-cuda](https://github.com/lif314/knn_pytorch_cuda) adapted for CUDA 12.x.
+* **Stereo depth estimation**: Uses D435i IR stereo + [FoundationStereo](https://github.com/NVlabs/FoundationStereo) for better depth quality compared to RGB-D.
+* **Multiple demos**: Built on top of [GraspNet-Baseline](https://github.com/graspnet/graspnet-baseline), with major modifications in `franka_graspnet/` and `scripts/`.
+
+---
+
+## Tested Environment
+
+* **OS**: Ubuntu 22.04
+* **CUDA**: 12.4
+* **Python**: 3.12
+* **Torch**: 2.6.0
+* **Camera**: Intel RealSense D435i
+* **Franky**: [franky](https://github.com/TimSchneider42/franky) (libfranka 0.15.0)
+
+---
+
+## Installation
+
+### Create environment
+
+```bash
+conda create -n graspnet python==3.12
+conda activate graspnet
+
+pip install torch==2.6.0 torchvision==0.21.0 --index-url https://download.pytorch.org/whl/cu124
+pip install -r requirements.txt
+pip install setuptools==78.0.1
+
+# libfranka 0.15
+pip install franky-control
+pip install pyrealsense2
+
+# install graspnet dependencies
+cd pointnet2
+python setup.py install
+cd ..
+
+cd knn
+python setup.py install
+cd ..
+
+cd graspnetAPI
+pip install .
+cd ..
+
+# (Optional) install FoundationStereo dependencies
+pip install -r requirements_fs.txt
+```
+
+### Download checkpoints
+
+Organize checkpoints as follows:
+
+```
+checkpoints/
+├── foundation_stereo
+│   ├── 11-33-40
+│   │   ├── cfg.yaml
+│   │   └── model_best_bp2.pth
+│   └── 23-51-11
+│       ├── cfg.yaml
+│       └── model_best_bp2.pth
+└── graspnet
+    ├── checkpoint-kn.tar
+    └── checkpoint-rs.tar
+```
+
+---
+
+## Usage
+
+### Test GraspNet
+
+```bash
+python scripts/graspnet_demo.py
+```
+![image](./assets/graspnet_demo.png)
+
+### Test FoundationStereo
+
+```bash
+python scripts/fs_demo.py
+```
+![image](./assets/fs_demo.png)
 
 
+### RealSense + GraspNet (6-DoF grasp prediction, press `q` to fetch next frame)
+
+```bash
+python scripts/graspnet_rs_demo.py
+```
+
+<video src="./assets/graspnet_rs_demo-2025-09-22_09.42.15.mp4" controls="controls" width="600" />
 
 
+### RealSense + FoundationStereo (stereo depth estimation, press <space> to refresh, `q` to quit)
 
+```bash
+python scripts/fs_rs_demo.py
+```
+
+<video src="./assets/fs_rs_demo-2025-09-22_09.49.08.mp4" controls="controls" width="600" />
+
+
+### RealSense + FoundationStereo + GraspNet (6-DoF grasp prediction, press `q` to fetch next frame)
+
+```bash
+python scripts/graspnet_fs_rs_demo.py
+```
+
+<video src="./assets/graspnet_fs_rs_demo-2025-09-22_10.19.14.mp4" controls="controls" width="600" />
+
+### Franka + RealSense RGB-D + GraspNet (real-time grasping)
+
+```bash
+python scripts/franky_graspnet_rs_demo.py
+```
+
+<video src="./assets/franky_graspnet_rs_demo-2025-09-22_10.27.00.mp4" controls="controls" width="600" />
+
+### Franka + RealSense IR + FoundationStereo + GraspNet (real-time grasping)
+
+```bash
+python scripts/franky_graspnet_fs_demo.py
+```
+
+<video src="./assets/franky_graspnet_fs_demo-2025-09-22_11.01.45.mp4" controls="controls" width="600" />
+
+## Known [Issues](https://github.com/TimSchneider42/franky/issues/57)
+
+When controlling FR3 with **franky**, motion may sometimes abort with reflex errors such as:
+
+```
+franky._franky.ControlException: libfranka: Move command aborted: motion aborted by reflex! ["joint_velocity_violation"]
+
+franky._franky.ControlException: libfranka: Move command aborted: motion aborted by reflex! ["cartesian_reflex"]
+```
+
+Currently, the best set of control parameters is unclear. Trajectory planners (e.g., [curobo](https://github.com/NVlabs/curobo)) might help.
+Contributions, suggestions, and parameter tuning advice are highly welcome! 🚀
 
 
 ------------------------------
