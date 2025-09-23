@@ -7,7 +7,22 @@ class FrankaController:
     def __init__(self, robot_ip: str = "192.168.1.1"):
         
         self.robot = Robot(robot_ip)
-        self.robot.relative_dynamics_factor = RelativeDynamicsFactor(0.05, 0.05, 0.05)
+
+        # self.robot.relative_dynamics_factor = RelativeDynamicsFactor(0.05, 0.05, 0.05)
+        self.robot.relative_dynamics_factor = 0.05
+
+        # Set collision behavior
+        lower_torque_thresholds = [20.0] * 7  # Nm
+        upper_torque_thresholds = [40.0] * 7  # Nm
+        lower_force_thresholds = [10.0] * 6  # N (linear) and Nm (angular)
+        upper_force_thresholds = [20.0] * 6  # N (linear) and Nm (angular)
+        self.robot.set_collision_behavior(
+            lower_torque_thresholds,
+            upper_torque_thresholds,
+            lower_force_thresholds,
+            upper_force_thresholds,
+        )
+
         self.gripper = Gripper(robot_ip)
 
         self.HOME_JOINT_POSE = JointMotion(np.array([0. , -0.78539816,  0. , -2.35619449,  0. , 1.57079633,  0.78539816]))
@@ -21,7 +36,7 @@ class FrankaController:
         ])
         self.T_Cam2Gripper = np.array([[0.05895725], [-0.02991709], [-0.03509327]])
         # EE 坐标系下的 Tool 偏移
-        self.TOOL_IN_EE = np.array([-0.010, -0.000, 0.085]) # Z越小，夹爪约向下
+        self.TOOL_IN_EE = np.array([-0.010, -0.000, 0.080]) # Z越小，夹爪越向下
 
     def move_home(self):
         self.robot.move(self.HOME_JOINT_POSE)

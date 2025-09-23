@@ -5,7 +5,7 @@ This repository demonstrates **6-DoF grasping on the Franka FR3** using [GraspNe
 ## Key Features
 
 * **Easy to use**: Pure Python implementation, no ROS required. Robot control via [franky](https://github.com/TimSchneider42/franky).
-* **Modern PyTorch**: Upgraded to PyTorch 2.6.0 with CUDA 12.4.
+* **Modern PyTorch**: Upgraded to PyTorch 2.x with CUDA 12.x.
   * Includes a modified [knn-cuda](https://github.com/lif314/knn_pytorch_cuda) adapted for CUDA 12.x.
 * **Stereo depth estimation**: Uses D435i IR stereo + [FoundationStereo](https://github.com/NVlabs/FoundationStereo) for better depth quality compared to RGB-D.
 * **Multiple demos**: Built on top of [GraspNet-Baseline](https://github.com/graspnet/graspnet-baseline), with major modifications in `franka_graspnet/` and `scripts/`.
